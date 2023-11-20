@@ -18,12 +18,7 @@ function validate(dobValue) {
 let userForm = document.getElementById('user-form');
 
 const retrieveEntries = () => {
-  let entries = localStorage.getItem('userEntries');
-  if (entries) {
-    entries = JSON.parse(entries);
-  } else {
-    entries = [];
-  }
+  let entries = JSON.parse(sessionStorage.getItem('userEntries')) || [];
   return entries;
 };
 
@@ -70,13 +65,14 @@ const saveUserForm = (event) => {
     dob: dob,
     t_c: t_c
   };
-  userEntries = retrieveEntries();
+  let userEntries = retrieveEntries();
 
   userEntries.push(entry);
 
-  localStorage.setItem('userEntries', JSON.stringify(userEntries));
+  sessionStorage.setItem('userEntries', JSON.stringify(userEntries));
   displayEntries();
 };
 
 userForm.addEventListener('submit', saveUserForm);
 displayEntries();
+
